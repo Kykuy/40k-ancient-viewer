@@ -12,8 +12,8 @@ function App() {
   const [unlockReqs, setUnlockReqs] = useState({});
   const [itemTypeList, setItemTypeList] = useState({});
 
-  const [selectedItemType, setSelectedItemType] = useState('');
-  const [selectedAffix, setSelectedAffix] = useState('');
+  const [selectedItemType, setSelectedItemType] = useState('arc_blade');
+  const [selectedAffix, setSelectedAffix] = useState('Anguish');
 
   function createAncientsData(spreadsheetData) {
     const enchants = {};
@@ -148,6 +148,10 @@ function App() {
       }
     );
   }, []) // an empty array as a second argument is just a way to tell React this effect with all this unoptimized spaghetti code should only run once - on first render
+
+  useEffect(() => {
+    setSelectedAffix( Object.keys(enchants).find( (key) => enchants[key].itemTypes.includes(selectedItemType) ) );
+  }, [enchants, selectedItemType]);
   
   // return block defines rendered HTML 
   if (error) {
@@ -165,10 +169,7 @@ function App() {
 
         <label>Select item type:
 
-          <select name = 'itemType' value = {selectedItemType}
-           onChange = { (event) => {
-              setSelectedItemType(event.target.value);
-            }}>
+          <select name = 'itemType' value = {selectedItemType} onChange = { (event) => setSelectedItemType(event.target.value) }>
             <optgroup label = 'Armor'>
               {itemTypeList.armor.map( (armorType) => {
                 return <option key = {armorType} value = {armorType}>{armorType}</option>
