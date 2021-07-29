@@ -13,7 +13,7 @@ function App() {
   const [itemTypeList, setItemTypeList] = useState({});
 
   const [selectedItemType, setSelectedItemType] = useState('arc_blade');
-  const [selectedAffix, setSelectedAffix] = useState('Anguish');
+  const [selectedAffix, setSelectedAffix] = useState('Ambush_4');
 
   function createAncientsData(spreadsheetData) {
     const enchants = {};
@@ -30,7 +30,7 @@ function App() {
     for ( let key of Object.keys(spreadsheetData[0]) ) {  // key is an affix as defined in spreadsheet header(A1, B1, and so on)
 
       enchants[key] = { // set up an enchant template for each variant
-        itemTypes: '',
+        itemTypes: [],
         ancientEnch: '',
         ench1: '',
         ench2: '',
@@ -147,7 +147,7 @@ function App() {
         setError(error);
       }
     );
-  }, []) // an empty array as a second argument is just a way to tell React this effect with all this unoptimized spaghetti code should only run once - on first render
+  }, []) // an empty array as a second argument is just a way to tell React this effect with all this code above should only run once - on first render
 
   useEffect(() => {
     setSelectedAffix( Object.keys(enchants).find( (key) => enchants[key].itemTypes.includes(selectedItemType) ) );
@@ -206,16 +206,29 @@ function App() {
         <label>Select Ancient Relic affix:
           
           <select name = 'ancientAffix' value = {selectedAffix} onChange = {(event) => setSelectedAffix(event.target.value)}>
-            {Object.keys(enchants).map( (affix) => {
-              return <option key = {affix}               
-              disabled = {!enchants[affix].itemTypes.includes(selectedItemType)}
+            {Object.keys(enchants).filter( affix => enchants[affix].itemTypes.includes(selectedItemType) ).map( (affix) => {
+              return <option key = {affix}              
               value = {affix}
-              >of {affix}</option>
+              >of {affix.slice(0, affix.indexOf('_'))}</option>
             })}
           </select>
           
         </label>
 
+      </div>
+
+      <div className = 'output'>
+        <p className = 'itemName'>{selectedItemType} of {selectedAffix.slice(0, selectedAffix.indexOf('_'))}</p>
+        <p className = 'ancientEnch'
+        data-tooltip = {`${unlockReqs[selectedAffix].ancientEnch.condition}(${unlockReqs[selectedAffix].ancientEnch.value})`}
+        >Ancient Relic enchant: {enchants[selectedAffix].ancientEnch}</p>
+        
+        {[1, 2, 3, 4].map( number => { // there are 4 base enchants, create a description for each
+          // dangerouslySetInnerHTML may theoretically expose us to XSS attack, but since we don't store any sensitive data we just don't care
+          return <p key = {`enchant#${number}`} className = 'primaryEnch' 
+          dangerouslySetInnerHTML = {{__html: `Regular enchant №${number}: ${enchants[selectedAffix][`ench${number}`]}`}}
+          data-tooltip = {`${unlockReqs[selectedAffix][`ench${number}`].condition}(${unlockReqs[selectedAffix][`ench${number}`].value})`}></p> // outputs 'condition text(value)'
+        })}
       </div>
       </>
     )
