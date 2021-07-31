@@ -13,8 +13,78 @@ function App() {
   const [unlockReqs, setUnlockReqs] = useState({});
   const [itemTypeList, setItemTypeList] = useState({});
 
-  const [selectedItemType, setSelectedItemType] = useState({value: 'arc_blade', label: 'arc_blade'});
-  const [selectedAffix, setSelectedAffix] = useState({value: 'Ambush_4', label: 'of Ambush'});
+  const [selectedItemType, setSelectedItemType] = useState({value: 'arc_blade', label: 'Arc Blade'});
+  const [selectedAffix, setSelectedAffix] = useState({value: 'Ambush_4', label: 'Ambush'});
+
+  const itemsDictionary = {
+    arc_blade: "Arc Blade",
+    arc_rifle: "Arc Rifle",
+    arc_sword: "Arc Sword",
+    assassin_power_sword: "Assassin Power Sword",
+    autogun: "Autogun",
+    autopistol: "Autopistol",
+    belt: "Teleporter/Digital Weapons",
+    belt_forcefield: "Force Field",
+    belt_grenade: "Grenade",
+    belt_mine: "Mine",
+    belt_psyker: "Psychic Focus",
+    belt_techadept: "Archeotech Item",
+    bolt_pistol: "Bolt Pistol",
+    boltgun: "Boltgun",
+    carthean_sword: "Carthean Sword",
+    chainsword: "Chainsword",
+    death_cult_blade: "Death Cult Blade",
+    eviscerator: "Eviscerator",
+    exitus_rifle: "Exitus Rifle",
+    eye_implant: "Eye Implant",
+    force_rod: "Force Rod",
+    force_rod_2: "Warp Rod",
+    force_rod_3: "Telekinetic Rod",    
+    force_staff: "Force Stave",
+    force_staff_2: "Pyrokinetic Stave",
+    force_staff_3: "Wyrdvane Stave",    
+    force_sword: "Force Sword",
+    force_sword_2: "Biomantic Sword",
+    force_sword_3: "Aether Blade",
+    grav_gun: "Grav Gun",
+    grav_pistol: "Grav Pistol",
+    greataxe: "Greataxe",
+    greatsword: "Greatsword",
+    grenade_launcher: "Grenade Launcher",
+    heavy_bolter: "Heavy Bolter",
+    heavy_flamer: "Heavy Flamer",
+    inferno_pistol: "Inferno Pistol",
+    inoculator: "Inoculator",
+    lasgun: "Lasgun",
+    laspistol: "Laspistol",
+    longlas_rifle: "Longlas Rifle",
+    main_implant: "Main Implant",
+    melta_gun: "Melta Gun",
+    multi_melta: "Multi Melta",
+    needler_sniper_rifle: "Needler Sniper Rifle",
+    neural_implant: "Neural Implant",
+    null_rod: "Null Rod",
+    omnissian_axe: "Omnissian Axe",
+    plasma_cannon: "Plasma Cannon",
+    plasma_gun: "Plasma Gun",
+    plasma_pistol: "Plasma Pistol",
+    power_armor: "Power Armor",
+    power_axe: "Power Axes",
+    power_hammer: "Power Hammer",
+    power_sword: "Power Swords",
+    psyker_armor: "Psyker Armor",
+    purity_seal: "Purity Seal",
+    radium_carbine: "Radium Carbine",
+    shotgun: "Shotgun",
+    signum: "Signum",
+    sniper_rifle: "Sniper Rifle",
+    storm_shield: "Storm Shield",
+    suppression_shield: "Suppression Shield",
+    synskin_armor: "Synskin Armor",
+    techadept_armour: "Techadept Armor",
+    thunder_hammer: "Thunder Hammer",
+    voltaic_axe: "Voltaic Axe",
+  };
   
   const groupStyles = { // style for the group delimiter of react-select
     display: 'flex',
@@ -119,11 +189,11 @@ function App() {
       }
 
       // sort item types in alphabetical order
-      itemTypes.armor.sort();
-      itemTypes.belts.sort();
-      itemTypes.implants.sort();
-      itemTypes.others.sort();
-      itemTypes.weapons.sort();
+      // itemTypes.armor.sort();
+      // itemTypes.belts.sort();
+      // itemTypes.implants.sort();
+      // itemTypes.others.sort();
+      // itemTypes.weapons.sort();
 
       setItemTypeList(itemTypes);
     }
@@ -156,6 +226,22 @@ function App() {
 
     setEnchants(enchants);
     setUnlockReqs(unlockReqs);        
+  }
+
+  function sortItemLabels(label1, label2) {
+    let nameA = label1.label.toUpperCase(); // ignore upper and lowercase
+    let nameB = label2.label.toUpperCase(); // ignore upper and lowercase
+
+    if (nameA < nameB) {
+      return -1;
+    }
+
+    if (nameA > nameB) {
+      return 1;
+    }
+
+    // names must be equal
+    return 0;
   }
 
   useEffect(() => {
@@ -191,12 +277,12 @@ function App() {
         let appropriateAffix = Object.keys(enchants).find( key => enchants[key].itemTypes.includes(selectedItemType.value) );
         setSelectedAffix({
           value: appropriateAffix,
-          label: `of ${appropriateAffix?.slice(0, appropriateAffix.indexOf('_'))}`,
+          label: appropriateAffix?.slice(0, appropriateAffix.indexOf('_')),
         });
       } else {
         setSelectedAffix({
           value: validSameAffixEnchants[0],
-          label: `of ${validSameAffixEnchants[0]?.slice(0, validSameAffixEnchants[0].indexOf('_'))}`,
+          label: validSameAffixEnchants[0]?.slice(0, validSameAffixEnchants[0].indexOf('_')),
         })
       }
     }    
@@ -269,27 +355,27 @@ function App() {
         options = {[
           {
             label: 'Armor',
-            options: Array.from( itemTypeList.armor.map( (armorType) => ({value: armorType, label: armorType}) ) )
+            options: Array.from( itemTypeList.armor.map( (armorType) => ({value: armorType, label: itemsDictionary[armorType]}) ) ).sort(sortItemLabels),
           },
 
           {
             label: 'Belts',
-            options: Array.from( itemTypeList.belts.map( (beltType) => ({value: beltType, label: beltType}) ) )
+            options: Array.from( itemTypeList.belts.map( (beltType) => ({value: beltType, label: itemsDictionary[beltType]}) ) ).sort(sortItemLabels),
           },
 
           {
             label: 'Implants',
-            options: Array.from( itemTypeList.implants.map( (implantType) => ({value: implantType, label: implantType}) ) )
+            options: Array.from( itemTypeList.implants.map( (implantType) => ({value: implantType, label: itemsDictionary[implantType]}) ) ).sort(sortItemLabels),
           },
 
           {
             label: 'Other',
-            options: Array.from( itemTypeList.others.map( (otherType) => ({value: otherType, label: otherType}) ) )
+            options: Array.from( itemTypeList.others.map( (otherType) => ({value: otherType, label: itemsDictionary[otherType]}) ) ).sort(sortItemLabels),
           },
 
           {
             label: 'Weapons',
-            options: Array.from( itemTypeList.weapons.map( (weaponType) => ({value: weaponType, label: weaponType}) ) )
+            options: Array.from( itemTypeList.weapons.map( (weaponType) => ({value: weaponType, label: itemsDictionary[weaponType]}) ) ).sort(sortItemLabels),
           },
           ]}          
         />
@@ -300,7 +386,7 @@ function App() {
           .map( affix => {
             return { 
               value: affix,
-              label: `of ${affix.slice(0, affix.indexOf('_'))}`,
+              label: affix.slice(0, affix.indexOf('_')),
             }
             })
         )}        
@@ -309,7 +395,7 @@ function App() {
       </div>
 
       <div className = 'output'>
-        <p className = 'itemName'>{selectedItemType.value} of {selectedAffix.value.slice(0, selectedAffix.value.indexOf('_'))}</p>
+        <p className = 'itemName'>{selectedItemType.label} of {selectedAffix.value.slice(0, selectedAffix.value.indexOf('_'))}</p>
         <p className = 'ancientEnch'
         data-tooltip = {`${unlockReqs[selectedAffix.value].ancientEnch.condition}(${unlockReqs[selectedAffix.value].ancientEnch.value})`}
         >Ancient Relic enchant: {enchants[selectedAffix.value].ancientEnch}</p>
