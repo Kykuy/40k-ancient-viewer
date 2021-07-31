@@ -186,14 +186,7 @@ function App() {
             itemTypes.weapons.push(itemType);
           }
         }
-      }
-
-      // sort item types in alphabetical order
-      // itemTypes.armor.sort();
-      // itemTypes.belts.sort();
-      // itemTypes.implants.sort();
-      // itemTypes.others.sort();
-      // itemTypes.weapons.sort();
+      }   
 
       setItemTypeList(itemTypes);
     }
