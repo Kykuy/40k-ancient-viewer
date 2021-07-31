@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'; 
 
 import './App.css';
-import GSheetReader from 'g-sheets-api'; // get the google-sheets reader library
-import Select from 'react-select'; // get the select element library
+import Input from '../Components/Input';
+import Output from '../Components/Output';
+
+import GSheetReader from 'g-sheets-api'; // get the google-sheets reader libraryy
 
 function App() {
   const [error, setError] = useState(null); // error information will be stored here
@@ -84,33 +86,8 @@ function App() {
     techadept_armour: "Techadept Armor",
     thunder_hammer: "Thunder Hammer",
     voltaic_axe: "Voltaic Axe",
-  };
+  };  
   
-  const groupStyles = { // style for the group delimiter of react-select
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  };
-
-  const groupBadgeStyles = { // style for the number indicator of the elements in a group
-    backgroundColor: '#EBECF0',
-    borderRadius: '2em',
-    color: '#172B4D',
-    display: 'inline-block',
-    fontSize: 12,
-    fontWeight: 'normal',
-    lineHeight: '1',
-    minWidth: 1,
-    padding: '0.16666666666667em 0.5em',
-    textAlign: 'center',
-  };
-  
-  const formatGroupLabel = data => (
-    <div style={groupStyles}>
-      <span>{data.label}</span>
-      <span style={groupBadgeStyles}>{data.options.length}</span>
-    </div>
-  );
 
   function createAncientsData(spreadsheetData) {
     const enchants = {};
@@ -221,22 +198,6 @@ function App() {
     setUnlockReqs(unlockReqs);        
   }
 
-  function sortItemLabels(label1, label2) {
-    let nameA = label1.label.toUpperCase(); // ignore upper and lowercase
-    let nameB = label2.label.toUpperCase(); // ignore upper and lowercase
-
-    if (nameA < nameB) {
-      return -1;
-    }
-
-    if (nameA > nameB) {
-      return 1;
-    }
-
-    // names must be equal
-    return 0;
-  }
-
   useEffect(() => {
     GSheetReader(
       {
@@ -295,110 +256,16 @@ function App() {
       </div>
 
       <div className = 'selectGroup'>
-
-        {/* <label>Select item type:
-
-          <select name = 'itemType' value = {selectedItemType} onChange = { (event) => setSelectedItemType(event.target.value) }>
-            <optgroup label = 'Armor'>
-              {itemTypeList.armor.map( (armorType) => {
-                return <option key = {armorType} value = {armorType}>{armorType}</option>
-              })}
-            </optgroup>
-
-            <optgroup label = 'belts'>
-              {itemTypeList.belts.map( (beltType) => {
-                return <option key = {beltType} value = {beltType}>{beltType}</option>
-              })}
-            </optgroup>
-
-            <optgroup label = 'implants'>
-              {itemTypeList.implants.map( (implantType) => {
-                return <option key = {implantType} value = {implantType}>{implantType}</option>
-              })}
-            </optgroup>
-
-            <optgroup label = 'other'>
-              {itemTypeList.others.map( (otherType) => {
-                return <option key = {otherType} value = {otherType}>{otherType}</option>
-              })}
-            </optgroup>
-
-            <optgroup label = 'weapons'>
-              {itemTypeList.weapons.map( (weaponType) => {
-                return <option key = {weaponType} value = {weaponType}>{weaponType}</option>
-              })}
-            </optgroup>
-          </select>
-
-        </label>
-
-        <label>Select Ancient Relic affix:
-          
-          <select name = 'ancientAffix' value = {selectedAffix} onChange = {(event) => setSelectedAffix(event.target.value)}>
-            {Object.keys(enchants).filter( affix => enchants[affix].itemTypes.includes(selectedItemType) ).map( (affix) => {
-              return <option key = {affix}              
-              value = {affix}
-              >of {affix.slice(0, affix.indexOf('_'))}</option>
-            })}
-          </select>
-          
-        </label> */}
-
-        <Select isClearable formatGroupLabel = {formatGroupLabel} defaultValue = {selectedItemType} onChange = {setSelectedItemType}
-        options = {[
-          {
-            label: 'Armor',
-            options: Array.from( itemTypeList.armor.map( (armorType) => ({value: armorType, label: itemsDictionary[armorType]}) ) ).sort(sortItemLabels),
-          },
-
-          {
-            label: 'Belts',
-            options: Array.from( itemTypeList.belts.map( (beltType) => ({value: beltType, label: itemsDictionary[beltType]}) ) ).sort(sortItemLabels),
-          },
-
-          {
-            label: 'Implants',
-            options: Array.from( itemTypeList.implants.map( (implantType) => ({value: implantType, label: itemsDictionary[implantType]}) ) ).sort(sortItemLabels),
-          },
-
-          {
-            label: 'Other',
-            options: Array.from( itemTypeList.others.map( (otherType) => ({value: otherType, label: itemsDictionary[otherType]}) ) ).sort(sortItemLabels),
-          },
-
-          {
-            label: 'Weapons',
-            options: Array.from( itemTypeList.weapons.map( (weaponType) => ({value: weaponType, label: itemsDictionary[weaponType]}) ) ).sort(sortItemLabels),
-          },
-          ]}          
+        <Input enchants = {enchants} selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
+          setSelectedItemType = {setSelectedItemType} setSelectedAffix = {setSelectedAffix}
+          itemTypeList = {itemTypeList} itemsDictionary = {itemsDictionary}
         />
-
-        <Select isClearable value = {selectedAffix} defaultValue = {selectedAffix} onChange = {setSelectedAffix}
-        options = {Array.from(Object.keys(enchants)
-          .filter( affix => enchants[affix].itemTypes.includes(selectedItemType.value) )
-          .map( affix => {
-            return { 
-              value: affix,
-              label: affix.slice(0, affix.indexOf('_')),
-            }
-            })
-        )}        
-        />
-
       </div>
 
       <div className = 'output'>
-        <p className = 'itemName'>{selectedItemType.label} of {selectedAffix.value.slice(0, selectedAffix.value.indexOf('_'))}</p>
-        <p className = 'ancientEnch'
-        data-tooltip = {`${unlockReqs[selectedAffix.value].ancientEnch.condition}(${unlockReqs[selectedAffix.value].ancientEnch.value})`}
-        >Ancient Relic enchant: {enchants[selectedAffix.value].ancientEnch}</p>
-        
-        {[1, 2, 3, 4].map( number => { // there are 4 base enchants, create a description for each
-          // dangerouslySetInnerHTML may theoretically expose us to XSS attack, but since we don't store any sensitive data we just don't care
-          return <p key = {`enchant#${number}`} className = 'primaryEnch' 
-          dangerouslySetInnerHTML = {{__html: `Regular enchant №${number}: ${enchants[selectedAffix.value][`ench${number}`]}`}}
-          data-tooltip = {`${unlockReqs[selectedAffix.value][`ench${number}`].condition}(${unlockReqs[selectedAffix.value][`ench${number}`].value})`}></p> // outputs 'condition text(value)'
-        })}
+        <Output enchants = {enchants} unlockReqs = {unlockReqs}
+          selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
+        />
       </div>
       </>
     )
