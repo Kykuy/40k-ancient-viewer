@@ -14,7 +14,7 @@ function App() {
   const [itemTypeList, setItemTypeList] = useState({});
 
   const [selectedItemType, setSelectedItemType] = useState({value: 'arc_blade', label: 'arc_blade'});
-  const [selectedAffix, setSelectedAffix] = useState({value: 'Ambush_4', label: 'Ambush'});
+  const [selectedAffix, setSelectedAffix] = useState({value: 'Ambush_4', label: 'of Ambush'});
   
   const groupStyles = { // style for the group delimiter of react-select
     display: 'flex',
@@ -181,12 +181,27 @@ function App() {
   // }, [enchants, selectedItemType]);
 
   useEffect(() => { // useEffect for react-select library select
-    let appropriateAffix = Object.keys(enchants).find( (key) => enchants[key].itemTypes.includes(selectedItemType.value) );
-    setSelectedAffix({
-      value: appropriateAffix,
-      label: appropriateAffix.slice(0, appropriateAffix.indexOf('_')),
-    });
-  }, [enchants, selectedItemType.value]);
+    let hasExactSameEnchant = enchants[selectedAffix.value]?.itemTypes.includes(selectedItemType.value);    
+
+    if (!hasExactSameEnchant) {
+      let validSameAffixEnchants = Object.keys(enchants)
+      .filter( affix => affix.includes( selectedAffix.value?.slice(0, selectedAffix.value?.indexOf('_')) ) && enchants[affix].itemTypes.includes(selectedItemType.value) );
+
+      if (!validSameAffixEnchants.length) {
+        let appropriateAffix = Object.keys(enchants).find( key => enchants[key].itemTypes.includes(selectedItemType.value) );
+        setSelectedAffix({
+          value: appropriateAffix,
+          label: `of ${appropriateAffix?.slice(0, appropriateAffix.indexOf('_'))}`,
+        });
+      } else {
+        setSelectedAffix({
+          value: validSameAffixEnchants[0],
+          label: `of ${validSameAffixEnchants[0]?.slice(0, validSameAffixEnchants[0].indexOf('_'))}`,
+        })
+      }
+    }    
+    
+  }, [enchants, selectedAffix.value, selectedItemType.value]); // the array of dependencies determines when should the effect run - on change of any of the included dependency
   
   // return block defines rendered HTML 
   if (error) {
@@ -285,7 +300,7 @@ function App() {
           .map( affix => {
             return { 
               value: affix,
-              label: affix.slice(0, affix.indexOf('_')), 
+              label: `of ${affix.slice(0, affix.indexOf('_'))}`,
             }
             })
         )}        
