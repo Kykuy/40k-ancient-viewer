@@ -249,25 +249,29 @@ function App() {
   } else if (isLoading) {
     return <div>Loading data...</div>
   } else {
-    return (
-      <>
-       <div className = 'App'>  {/* React uses className HTML attribute instead of class */}
-        40K: Inquisitor - Ancient Relic Viewer
-      </div>
-
-      <div className = 'selectGroup'>
-        <Input enchants = {enchants} selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
-          setSelectedItemType = {setSelectedItemType} setSelectedAffix = {setSelectedAffix}
-          itemTypeList = {itemTypeList} itemsDictionary = {itemsDictionary}
-        />
-      </div>
-
-      <div className = 'output'>
-        <Output enchants = {enchants} unlockReqs = {unlockReqs}
-          selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
-        />
-      </div>
-      </>
+    return (      
+      <div className = 'wrapper'>
+        <header>
+          <h1 className = 'title'>40K: Inquisitor - Ancient Relic Viewer</h1> {/* React uses className HTML attribute instead of class */}
+          <p className = 'hero'>
+            By Kykuy, updated for <span>2.4.0c</span>. All displayed data provided by <a href='https://docs.google.com/spreadsheets/d/1SsMOf-6jhhhly36s2pf7aqWO96Y15lVN2alulkMJX1s/edit#gid=814775978'>Psojed</a> and <a href="https://github.com/mome-borogove/40K-ancient-list/">Mome Borogove</a>.
+            For questions, visit <a href="https://discord.gg/inquisitor40k">40K: Inquisitor Discord</a>. Submit bugs at <a href="https://github.com/Kykuy/40K-ancient-list/issues">Github</a>.
+          </p>
+        </header>
+        <main>
+          <section className = 'selectGroup'>
+            <Input enchants = {enchants} selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
+              setSelectedItemType = {setSelectedItemType} setSelectedAffix = {setSelectedAffix}
+              itemTypeList = {itemTypeList} itemsDictionary = {itemsDictionary}
+            />
+          </section>
+          <section className = 'output'>
+            <Output enchants = {enchants} unlockReqs = {unlockReqs}
+              selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
+            />
+          </section>
+        </main>
+      </div>     
     )
   }
 }

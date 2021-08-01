@@ -84,7 +84,7 @@ function Input(props) {
             value: affix,
             label: affix.slice(0, affix.indexOf('_')),
           }
-          })
+        })
       )}        
       />
   </>
