@@ -13,6 +13,8 @@
   --scrollbarColor: #0ccac4;
   --mainFontColor: #e5e5e5;
   --labelMainColor: #495057;
+  --relicEnchColor: #c69761;
+  --primaryEnchColor: #bbfefa;
 }
 
 a {
@@ -55,3 +57,35 @@ body {
 .hero span {
   color: #bbfefa;
 }
+
+.selectWrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.react-select {    
+  color: initial;
+}
+
+.react-select__menu-list::-webkit-scrollbar { /* full scrollbar styles for webkit */
+  width: 0.5em;
+}
+ 
+.react-select__menu-list::-webkit-scrollbar-thumb {
+  background-color: rgb(187, 179, 179);
+  border: 1px solid slategrey;
+  border-radius: 25px;
+}
+
+.react-select__menu-list::-webkit-scrollbar-thumb:hover {
+  background-color:rgba(169, 0, 0, 1);
+}
+
+/* article {
+  flex: 1 1 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */

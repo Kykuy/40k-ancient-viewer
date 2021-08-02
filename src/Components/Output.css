@@ -1,0 +1,49 @@
+.output {
+  margin-top: 10px;
+}
+
+.itemCard {
+  display: flex;
+  flex-flow: column nowrap;  
+  max-width: 600px;  
+  margin: 0 auto;
+  border: 4px solid var(--delimiter);
+}
+
+.itemName {
+  color: #dd9e55;
+  border-bottom: 1px solid var(--delimiter);
+  text-align: center;  
+  font-weight: 700;
+}
+
+.enchantDescription {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 5px;
+}
+
+.enchantDescription:not(:first-of-type) {
+  border-top: 1px solid var(--delimiter);
+}
+
+.enchTypeIndicator {
+  display: inline-block; 
+  position: relative; 
+  width: 1rem;
+  height: 1rem;
+  border-radius: 2px;    
+}
+
+.ancientEnch .enchTypeIndicator {   
+  background-color: var(--relicEnchColor);
+}
+
+.primaryEnch .enchTypeIndicator {
+  background-color: var(--primaryEnchColor);
+}
+
+.enchText {
+  margin-left: 3px;
+}
