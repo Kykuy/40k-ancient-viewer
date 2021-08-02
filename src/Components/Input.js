@@ -1,7 +1,36 @@
 import Select from 'react-select'; // get the select element librar
 
 function Input(props) {
-  const { enchants, selectedItemType, selectedAffix, setSelectedItemType, setSelectedAffix, itemTypeList, itemsDictionary } = props;
+  const { screenWidth, enchants, selectedItemType, selectedAffix, setSelectedItemType, setSelectedAffix, itemTypeList, itemsDictionary } = props;
+
+  let itemTypeLabel = screenWidth > 576 ? <span>Item type:</span> : null;
+  let affixLabel = screenWidth > 576 ? <span>Ancient Relic affix:</span> : null;
+
+  const customStyles = {
+    container: (provided, state) => ({
+      ...provided,
+      width: 'min(100vw, 450px)',      
+      display: 'inline-block',      
+    }),
+
+    control: (provided, state) => ({
+      ...provided,           
+      border: state.isFocused ? 0 : '1px solid #ced4da;',      
+      boxShadow: state.isFocused ? '0 0 0 0.2rem rgb(187 254 250 / 25%)' : 'none',
+    }),
+
+    clearIndicator: (provided, state) => ({
+      ...provided,
+      '&:hover': {
+        color: 'red',
+      }
+    }),
+
+    menu: (provided, state) => ({
+      ...provided,      
+      marginTop: 0,      
+    }),
+  };
 
   const groupStyles = { // style for the group delimiter of react-select
     display: 'flex',
@@ -46,48 +75,52 @@ function Input(props) {
   }
 
   return (       
-    <>
-      <Select isClearable formatGroupLabel = {formatGroupLabel} defaultValue = {selectedItemType} onChange = {setSelectedItemType}
-      options = {[
-        {
-          label: 'Armor',
-          options: Array.from( itemTypeList.armor.map( (armorType) => ({value: armorType, label: itemsDictionary[armorType]}) ) ).sort(sortItemLabels),
-        },
+    <div className = 'selectWrapper'>    
+      <article>
+        {itemTypeLabel}
+        <Select styles = {customStyles} isClearable formatGroupLabel = {formatGroupLabel} defaultValue = {selectedItemType} onChange = {setSelectedItemType}
+        className = 'react-select' classNamePrefix = 'react-select'
+        options = {[
+          {
+            label: 'Armor',
+            options: Array.from( itemTypeList.armor.map( (armorType) => ({value: armorType, label: itemsDictionary[armorType]}) ) ).sort(sortItemLabels),
+          },
+          {
+            label: 'Belts',
+            options: Array.from( itemTypeList.belts.map( (beltType) => ({value: beltType, label: itemsDictionary[beltType]}) ) ).sort(sortItemLabels),
+          },
+          {
+            label: 'Implants',
+            options: Array.from( itemTypeList.implants.map( (implantType) => ({value: implantType, label: itemsDictionary[implantType]}) ) ).sort(sortItemLabels),
+          },
+          {
+            label: 'Other',
+            options: Array.from( itemTypeList.others.map( (otherType) => ({value: otherType, label: itemsDictionary[otherType]}) ) ).sort(sortItemLabels),
+          },
+          {
+            label: 'Weapons',
+            options: Array.from( itemTypeList.weapons.map( (weaponType) => ({value: weaponType, label: itemsDictionary[weaponType]}) ) ).sort(sortItemLabels),
+          },
+          ]}
+        />
+      </article>
 
-        {
-          label: 'Belts',
-          options: Array.from( itemTypeList.belts.map( (beltType) => ({value: beltType, label: itemsDictionary[beltType]}) ) ).sort(sortItemLabels),
-        },
-
-        {
-          label: 'Implants',
-          options: Array.from( itemTypeList.implants.map( (implantType) => ({value: implantType, label: itemsDictionary[implantType]}) ) ).sort(sortItemLabels),
-        },
-
-        {
-          label: 'Other',
-          options: Array.from( itemTypeList.others.map( (otherType) => ({value: otherType, label: itemsDictionary[otherType]}) ) ).sort(sortItemLabels),
-        },
-
-        {
-          label: 'Weapons',
-          options: Array.from( itemTypeList.weapons.map( (weaponType) => ({value: weaponType, label: itemsDictionary[weaponType]}) ) ).sort(sortItemLabels),
-        },
-        ]}          
-      />
-
-      <Select isClearable value = {selectedAffix} defaultValue = {selectedAffix} onChange = {setSelectedAffix}
-      options = {Array.from(Object.keys(enchants)
-        .filter( affix => enchants[affix].itemTypes.includes(selectedItemType.value) )
-        .map( affix => {
-          return { 
-            value: affix,
-            label: affix.slice(0, affix.indexOf('_')),
-          }
-        })
-      )}        
-      />
-  </>
+      <article>
+        {affixLabel}
+        <Select styles = {customStyles} isClearable value = {selectedAffix} defaultValue = {selectedAffix} onChange = {setSelectedAffix}
+        className = 'react-select' classNamePrefix = 'react-select'
+        options = {Array.from(Object.keys(enchants)
+          .filter( affix => enchants[affix].itemTypes.includes(selectedItemType.value) )
+          .map( affix => {
+            return {
+              value: affix,
+              label: affix.slice(0, affix.indexOf('_')),
+            }
+          })
+        )}
+        />
+      </article>
+  </div>
   )
 }
 

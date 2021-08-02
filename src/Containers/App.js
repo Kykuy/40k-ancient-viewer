@@ -7,6 +7,8 @@ import Output from '../Components/Output';
 import GSheetReader from 'g-sheets-api'; // get the google-sheets reader libraryy
 
 function App() {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);  
+
   const [error, setError] = useState(null); // error information will be stored here
 
   const [isLoading, setIsLoading] = useState(true);
@@ -199,6 +201,15 @@ function App() {
   }
 
   useEffect(() => {
+    function handleResize() {
+      setScreenWidth(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
     GSheetReader(
       {
         sheetId: "1SsMOf-6jhhhly36s2pf7aqWO96Y15lVN2alulkMJX1s",
@@ -259,10 +270,11 @@ function App() {
           </p>
         </header>
         <main>
-          <section className = 'selectGroup'>
+          <section className = 'input'>
             <Input enchants = {enchants} selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
               setSelectedItemType = {setSelectedItemType} setSelectedAffix = {setSelectedAffix}
               itemTypeList = {itemTypeList} itemsDictionary = {itemsDictionary}
+              screenWidth = {screenWidth}
             />
           </section>
           <section className = 'output'>
