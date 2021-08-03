@@ -280,6 +280,7 @@ function App() {
           <section className = 'output'>
             <Output enchants = {enchants} unlockReqs = {unlockReqs}
               selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
+              screenWidth = {screenWidth}
             />
           </section>
         </main>

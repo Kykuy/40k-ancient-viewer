@@ -3,9 +3,11 @@ import Select from 'react-select'; // get the select element librar
 function Input(props) {
   const { screenWidth, enchants, selectedItemType, selectedAffix, setSelectedItemType, setSelectedAffix, itemTypeList, itemsDictionary } = props;
 
-  let itemTypeLabel = screenWidth > 576 ? <span>Item type:</span> : null;
-  let affixLabel = screenWidth > 576 ? <span>Ancient Relic affix:</span> : null;
+  let itemTypeLabel = screenWidth > 700 ? <span>Item type:</span> : null;
+  let affixLabel = screenWidth > 700 ? <span>Ancient Relic affix:</span> : null;
 
+
+  //styling via CSS is possible but would require setting !important on most of the properties
   const customStyles = {
     container: (provided, state) => ({
       ...provided,
