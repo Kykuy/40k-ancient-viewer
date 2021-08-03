@@ -137,7 +137,7 @@ function Input(props) {
         <Select styles = {customStyles} isClearable value = {selectedAffix} defaultValue = {selectedAffix} onChange = {setSelectedAffix}
         className = 'react-select' classNamePrefix = 'react-select2'
         options = {Array.from(Object.keys(enchants)
-          .filter( affix => enchants[affix].itemTypes.includes(selectedItemType.value) )
+          .filter( affix => enchants[affix].itemTypes.includes(selectedItemType?.value) )
           .map( affix => {
             return {
               value: affix,

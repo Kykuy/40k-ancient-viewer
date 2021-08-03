@@ -1,5 +1,6 @@
 .output {
   margin-top: 10px;
+  text-align: center;
 }
 
 .tip {
@@ -90,36 +91,6 @@
 .lock:hover::before {
   border-color: rgb(46, 207, 6);
 }
-
-/* [data-tooltip] {
-  position: relative;  
-}
-
-[data-tooltip]::after { 
-  content: '';
-  width: 300px;
-  left: 0%;
-  top: 55%; 
-  transform: translate(0, -55%);
-  transition: 0.5s all;
-  opacity: 0;
-}
-
-[data-tooltip]:hover::after {  
-  content: attr(data-tooltip);
-  position: absolute;  
-  width: 300px; 
-  left: 125%;   
-  top: 55%; 
-  transform: translate(0, -55%);
-  background: black; 
-  color: #fff; 
-  padding: 0.25rem;        
-  z-index: 1;    
-  text-align: center; 
-  transition: 0.5s all; 
-  opacity: 1;   
-}   */
 
 [data-tooltip] {
   position: relative; 

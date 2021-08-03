@@ -9,12 +9,12 @@ function Output(props) {
     <>
       {tip}
       <article className = 'itemCard'>
-        <p className = 'itemName'>{selectedItemType.label} of {selectedAffix.value.slice(0, selectedAffix.value.indexOf('_'))}</p>
+        <p className = 'itemName'>{selectedItemType?.label} of {selectedAffix?.value?.slice(0, selectedAffix?.value.indexOf('_'))}</p>
 
         <p className = 'ancientEnch enchantDescription' >
           <span className = 'enchTypeIndicator'></span>
-          <span className = 'enchText'>{enchants[selectedAffix.value].ancientEnch}</span>
-          <span className = 'lock' data-tooltip = {`${unlockReqs[selectedAffix.value].ancientEnch.condition}(${unlockReqs[selectedAffix.value].ancientEnch.value})`}></span>
+          <span className = 'enchText'>{enchants[selectedAffix?.value]?.ancientEnch}</span>
+          <span className = 'lock' data-tooltip = {`${unlockReqs[selectedAffix?.value]?.ancientEnch.condition} (${unlockReqs[selectedAffix?.value]?.ancientEnch.value})`}></span>
         </p>
         
         {[1, 2, 3, 4].map( number => { // there are 4 base enchants, create a description for each
@@ -23,11 +23,12 @@ function Output(props) {
           dangerouslySetInnerHTML = {
             {
               __html: `<span class = 'enchTypeIndicator'></span>              
-              <span class = 'enchText'>${enchants[selectedAffix.value][`ench${number}`]}</span>              
-              <span class = 'lock' data-tooltip = '${unlockReqs[selectedAffix.value][`ench${number}`].condition}(${unlockReqs[selectedAffix.value][`ench${number}`].value})'></span>`
+              <span class = 'enchText'>${enchants[selectedAffix?.value]?.[`ench${number}`]}</span>              
+              <span class = 'lock' data-tooltip = '${unlockReqs[selectedAffix?.value]?.[`ench${number}`].condition}
+              (${unlockReqs[selectedAffix?.value]?.[`ench${number}`].value})'></span>` // outputs 'condition text(value)'
             }
           }
-          ></p> // outputs 'condition text(value)'
+          ></p> 
         })}
       </article>
     </>

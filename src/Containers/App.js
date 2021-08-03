@@ -18,7 +18,7 @@ function App() {
   const [itemTypeList, setItemTypeList] = useState({});
 
   const [selectedItemType, setSelectedItemType] = useState({value: 'arc_blade', label: 'Arc Blade'});
-  const [selectedAffix, setSelectedAffix] = useState({value: 'Ambush_4', label: 'Ambush'});
+  const [selectedAffix, setSelectedAffix] = useState({value: 'Ambush_ 4', label: 'Anguish'});
 
   const itemsDictionary = {
     arc_blade: "Arc Blade",
@@ -227,33 +227,41 @@ function App() {
     );
   }, []) // an empty array as a second argument is just a way to tell React this effect with all this code above should only run once - on first render
 
-  // useEffect(() => { // useEffect for native select
-  //   setSelectedAffix( Object.keys(enchants).find( (key) => enchants[key].itemTypes.includes(selectedItemType.value) ) );
-  // }, [enchants, selectedItemType]);
-
   useEffect(() => { // useEffect for react-select library select
-    let hasExactSameEnchant = enchants[selectedAffix.value]?.itemTypes.includes(selectedItemType.value);    
+    if ( selectedItemType !== null && selectedAffix !== null  ) {
 
-    if (!hasExactSameEnchant) {
-      let validSameAffixEnchants = Object.keys(enchants)
-      .filter( affix => affix.includes( selectedAffix.value?.slice(0, selectedAffix.value?.indexOf('_')) ) && enchants[affix].itemTypes.includes(selectedItemType.value) );
+      let hasExactSameEnchant = enchants[selectedAffix?.value]?.itemTypes.includes(selectedItemType?.value);    
 
-      if (!validSameAffixEnchants.length) {
-        let appropriateAffix = Object.keys(enchants).find( key => enchants[key].itemTypes.includes(selectedItemType.value) );
-        setSelectedAffix({
-          value: appropriateAffix,
-          label: appropriateAffix?.slice(0, appropriateAffix.indexOf('_')),
-        });
-      } else {
-        setSelectedAffix({
-          value: validSameAffixEnchants[0],
-          label: validSameAffixEnchants[0]?.slice(0, validSameAffixEnchants[0].indexOf('_')),
-        })
-      }
-    }    
+      if (!hasExactSameEnchant) {
+        let validSameAffixEnchants = Object.keys(enchants)
+        .filter( affix => affix.includes( selectedAffix?.value?.slice(0, selectedAffix?.value?.indexOf('_')) ) && enchants[affix].itemTypes.includes(selectedItemType?.value) );
+
+        if (!validSameAffixEnchants.length) {
+          let appropriateAffix = Object.keys(enchants).find( key => enchants[key].itemTypes.includes(selectedItemType?.value) );
+          setSelectedAffix({
+            value: appropriateAffix,
+            label: appropriateAffix?.slice(0, appropriateAffix.indexOf('_')),
+          });
+        } else {
+          setSelectedAffix({
+            value: validSameAffixEnchants[0],
+            label: validSameAffixEnchants[0]?.slice(0, validSameAffixEnchants[0].indexOf('_')),
+          })
+        }
+      } 
+
+    }
     
-  }, [enchants, selectedAffix.value, selectedItemType.value]); // the array of dependencies determines when should the effect run - on change of any of the included dependency
+  }, [enchants, selectedAffix?.value, selectedItemType?.value]); // selectedItemType/Affix are not included in dep array since that would exceed React update depth
   
+  const output = selectedItemType === null || selectedAffix === null ? 
+    <section className = 'output'>Select item type and affix to display an item</section> :
+    <Output enchants = {enchants} unlockReqs = {unlockReqs}
+      selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
+      screenWidth = {screenWidth}
+    />
+  ;
+
   // return block defines rendered HTML 
   if (error) {
     return <div>Error: {error}</div>
@@ -278,10 +286,7 @@ function App() {
             />
           </section>
           <section className = 'output'>
-            <Output enchants = {enchants} unlockReqs = {unlockReqs}
-              selectedItemType = {selectedItemType} selectedAffix = {selectedAffix}
-              screenWidth = {screenWidth}
-            />
+            {output}
           </section>
         </main>
       </div>     
