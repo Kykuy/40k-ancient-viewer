@@ -256,7 +256,7 @@ function App() {
   
   // return block defines rendered HTML 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <div>Error: {error}</div>
   } else if (isLoading) {
     return <div>Loading data...</div>
   } else {

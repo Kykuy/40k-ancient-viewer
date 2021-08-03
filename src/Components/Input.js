@@ -3,8 +3,8 @@ import Select from 'react-select'; // get the select element librar
 function Input(props) {
   const { screenWidth, enchants, selectedItemType, selectedAffix, setSelectedItemType, setSelectedAffix, itemTypeList, itemsDictionary } = props;
 
-  let itemTypeLabel = screenWidth > 700 ? <span>Item type:</span> : null;
-  let affixLabel = screenWidth > 700 ? <span>Ancient Relic affix:</span> : null;
+  let itemTypeLabel = screenWidth > 700 ? <span className = 'inputLabel itemTypeLabel'>Item type:</span> : null;
+  let affixLabel = screenWidth > 700 ? <span className = 'inputLabel affixLabel'>Ancient Relic affix:</span> : null;
 
 
   //styling via CSS is possible but would require setting !important on most of the properties
@@ -13,13 +13,15 @@ function Input(props) {
       ...provided,
       color: 'initial',
       width: 'min(100vw, 450px)',      
-      display: 'inline-block',      
+      display: 'inline-block',
     }),
 
     control: (provided, state) => ({
       ...provided,           
       border: state.isFocused ? 0 : '1px solid #ced4da;',      
       boxShadow: state.isFocused ? '0 0 0 0.2rem rgb(187 254 250 / 25%)' : 'none',
+      borderTopLeftRadius: screenWidth > 700 ? 0 : 4,
+      borderBottomLeftRadius: screenWidth > 700 ? 0 : 4, 
     }),
 
     clearIndicator: (provided, state) => ({
@@ -49,7 +51,12 @@ function Input(props) {
           backgroundColor: 'rgba(169, 0, 0, 1)',
         }
       },
-    })
+    }),
+
+    // valueContainer: (provided, state) => ({
+    //   ...provided,
+    //   justifyContent: 'center',
+    // }),
   };
 
   const groupStyles = { // style for the group delimiter of react-select
@@ -96,10 +103,10 @@ function Input(props) {
 
   return (       
     <div className = 'selectWrapper'>    
-      <article>
+      <article className = 'inputGroup'>
         {itemTypeLabel}
         <Select styles = {customStyles} isClearable formatGroupLabel = {formatGroupLabel} defaultValue = {selectedItemType} onChange = {setSelectedItemType}
-        className = 'react-select' classNamePrefix = 'react-select'
+        className = 'react-select' classNamePrefix = 'react-select1'
         options = {[
           {
             label: 'Armor',
@@ -125,10 +132,10 @@ function Input(props) {
         />
       </article>
 
-      <article>
+      <article className = 'inputGroup'>
         {affixLabel}
         <Select styles = {customStyles} isClearable value = {selectedAffix} defaultValue = {selectedAffix} onChange = {setSelectedAffix}
-        className = 'react-select' classNamePrefix = 'react-select'
+        className = 'react-select' classNamePrefix = 'react-select2'
         options = {Array.from(Object.keys(enchants)
           .filter( affix => enchants[affix].itemTypes.includes(selectedItemType.value) )
           .map( affix => {
