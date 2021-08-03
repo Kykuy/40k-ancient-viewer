@@ -3,7 +3,7 @@ import './Output.css'
 function Output(props) {
   const { screenWidth, enchants, unlockReqs, selectedItemType, selectedAffix } = props;
 
-  const tip = screenWidth > 568 ? <p className = 'tip'>Hover on the <span className = 'lock'></span> symbol to see unlock requirements</p> : null;
+  const tip = screenWidth > 568 ? <p className = 'tip'>Hover on the respective enchant's <span className = 'lock'></span> symbol to see unlock requirements</p> : null;
 
   return (
     <>

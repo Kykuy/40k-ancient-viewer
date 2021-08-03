@@ -11,6 +11,7 @@ function Input(props) {
   const customStyles = {
     container: (provided, state) => ({
       ...provided,
+      color: 'initial',
       width: 'min(100vw, 450px)',      
       display: 'inline-block',      
     }),
@@ -32,6 +33,23 @@ function Input(props) {
       ...provided,      
       marginTop: 0,      
     }),
+
+    menuList: (provided, state) => ({
+      ...provided,
+      '&::-webkit-scrollbar': {
+        width: '0.4em',
+      },
+
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'rgb(187, 179, 179)',
+        border: '1px solid slategrey',
+        borderRadius: '25px',
+
+        '&:hover': {
+          backgroundColor: 'rgba(169, 0, 0, 1)',
+        }
+      },
+    })
   };
 
   const groupStyles = { // style for the group delimiter of react-select
