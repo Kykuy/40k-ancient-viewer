@@ -10,7 +10,7 @@
 :root {
   --background: #1a1a1a;
   --delimiter: #1f5a56;
-  --scrollbarColor: #0ccac4;
+  --loadingColor: #0ccac4;
   --mainFontColor: #e5e5e5;
   --labelMainColor: #495057;
   --relicEnchColor: #c69761;
@@ -58,51 +58,60 @@ body {
   color: #bbfefa;
 }
 
+.loading {
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-ring {  
+  position: relative;
+  width: 80px;
+  height: 80px;  
+}
+
+.loading-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid var(--loadingColor);
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: var(--loadingColor) transparent transparent transparent;
+}
+
+.loading-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.loading-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.loading-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .selectWrapper {
   display: flex;
   flex-flow: column nowrap;   
   max-width: 600px;
   margin: 0 auto;
 }
-
-.input {
-  margin-top: 20px;
-}
-
-.inputGroup {
-  display: flex;
-  align-items: center;
-}
-
-.inputLabel {  
-  flex-grow: 1; 
-  background-color: #e9ecef;  
-  padding-right: 3px;  
-  align-self: center;
-  color: var(--labelMainColor);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  min-height: 38px;
-}
-
-.itemTypeLabel {
-  border-top-left-radius: 4px;
-  border-bottom: 1px solid #ced4da;
-}
-
-.affixLabel {
-  border-bottom-left-radius: 4px;
-  border-top: 1px solid #ced4da;
-}
-
-
-/* article {
-  flex: 1 1 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
 
 @media screen and (min-width: 700px) {
   header {

@@ -252,6 +252,7 @@ function App() {
 
     }
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enchants, selectedAffix?.value, selectedItemType?.value]); // selectedItemType/Affix are not included in dep array since that would exceed React update depth
   
   const output = selectedItemType === null || selectedAffix === null ? 
@@ -266,7 +267,10 @@ function App() {
   if (error) {
     return <div>Error: {error}</div>
   } else if (isLoading) {
-    return <div>Loading data...</div>
+    return <div className = 'loading'>Loading data...
+      <div class="loading-ring"><div></div><div></div><div></div><div></div>
+      </div>
+    </div>
   } else {
     return (      
       <div className = 'wrapper'>

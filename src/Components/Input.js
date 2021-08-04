@@ -1,3 +1,4 @@
+import './Input.css';
 import Select from 'react-select'; // get the select element librar
 
 function Input(props) {
