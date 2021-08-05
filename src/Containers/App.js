@@ -265,7 +265,12 @@ function App() {
 
   // return block defines rendered HTML 
   if (error) {
-    return <div>Error: {error}</div>
+    return (
+      <div>Error: {error}
+        <p>Try reloading the page in 10-15 seconds. If that doesn't help, check if the source <a href='https://docs.google.com/spreadsheets/d/1SsMOf-6jhhhly36s2pf7aqWO96Y15lVN2alulkMJX1s/edit#gid=814775978'>sheet</a> is still online. 
+        If it is, try reloading again and if it still doesn't help, file a bug report <a href="https://github.com/Kykuy/40k-ancient-viewer/issues">here</a>.</p>
+      </div>
+    )
   } else if (isLoading) {
     return <div className = 'loading'>Loading data...
       <div className = 'loading-ring'><div></div><div></div><div></div><div></div>
