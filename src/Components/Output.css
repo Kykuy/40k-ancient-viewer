@@ -163,7 +163,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 380px) {
   [data-tooltip]::after {
     max-width: calc(100vw - 25px);
   }
