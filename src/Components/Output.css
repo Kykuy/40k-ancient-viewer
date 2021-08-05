@@ -131,6 +131,17 @@
   }
 }
 
+@media screen and (min-width: 1400px) and (max-width: 1650px) {
+  [data-tooltip]::after {
+    top: 0;    
+    transform: translate(-30%, 0%);
+  }
+
+  [data-tooltip]:hover::after {  
+    top: -2.5rem;
+  }
+}
+
 @media screen and (min-width: 701px) and (max-width: 1399px) {
   [data-tooltip]::after {
     top: 0;    
