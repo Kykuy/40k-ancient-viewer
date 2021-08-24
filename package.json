@@ -37,6 +37,6 @@
     ]
   },
   "devDependencies": {
-    "g-sheets-api": "^1.4.1"
+    "g-sheets-api": "^2.1.1"
   }
 }

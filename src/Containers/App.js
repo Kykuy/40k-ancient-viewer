@@ -212,12 +212,14 @@ function App() {
   useEffect(() => {
     GSheetReader(
       {
+        apiKey: 'AIzaSyDVrdW7r9_CZHQnoln_k_jgfmTqAhhNW7w',
         sheetId: "1SsMOf-6jhhhly36s2pf7aqWO96Y15lVN2alulkMJX1s",
         sheetNumber: 2,
+        sheetName: 'Ancient Relic + Unlocks',
         returnAllResults: true,    
       },
       (results) => {
-        //console.log(results);
+        console.log(results);
         createAncientsData(results);
         setIsLoading(false);        
       },
@@ -282,7 +284,7 @@ function App() {
         <header>
           <h1 className = 'title'>40K: Inquisitor - Ancient Relic Viewer</h1> {/* React uses className HTML attribute instead of class */}
           <p className = 'hero'>
-            By Kykuy, updated for <span>2.4.0c</span>.
+            By Kykuy, updated for <span>2.4.1</span>.
             All displayed data provided by <a href='https://docs.google.com/spreadsheets/d/1SsMOf-6jhhhly36s2pf7aqWO96Y15lVN2alulkMJX1s/edit#gid=814775978'>Psojed</a> and <a href="https://github.com/mome-borogove/40K-ancient-list/">Mome Borogove</a>.
             For questions, visit <a href="https://discord.gg/inquisitor40k">40K: Inquisitor Discord</a>. 
             Submit bugs at <a href="https://github.com/Kykuy/40k-ancient-viewer/issues">Github</a>.
