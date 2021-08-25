@@ -212,7 +212,7 @@ function App() {
   useEffect(() => {
     GSheetReader(
       {
-        apiKey: 'AIzaSyDVrdW7r9_CZHQnoln_k_jgfmTqAhhNW7w',
+        apiKey: process.env.REACT_APP_API_KEY,
         sheetId: "1SsMOf-6jhhhly36s2pf7aqWO96Y15lVN2alulkMJX1s",
         sheetNumber: 2,
         sheetName: 'Ancient Relic + Unlocks',
