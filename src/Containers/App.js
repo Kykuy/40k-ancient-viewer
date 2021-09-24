@@ -219,7 +219,7 @@ function App() {
         returnAllResults: true,    
       },
       (results) => {
-        console.log(results);
+        // console.log(results);
         createAncientsData(results);
         setIsLoading(false);        
       },
