@@ -22,7 +22,7 @@ function App() {
 
   const itemsDictionary = {
     arc_blade: "Arc Blade",
-    arc_rifle: "Arc Rifle",
+    arc_rifle: "Plasma Caliver",
     arc_sword: "Arc Sword",
     assassin_power_sword: "Assassin Power Sword",
     autogun: "Autogun",
